@@ -1,10 +1,12 @@
 package com.example.thebasiscardapplication
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -12,7 +14,6 @@ import com.example.thebasiscardapplication.dataModel.CardDataList
 import com.example.thebasiscardapplication.dataModel.CardDataModel
 import com.yuyakaido.android.cardstackview.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_activity.*
 
 class MainActivity : AppCompatActivity(), CardStackListener {
 
