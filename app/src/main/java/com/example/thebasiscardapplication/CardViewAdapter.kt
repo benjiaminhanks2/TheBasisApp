@@ -33,13 +33,19 @@ class CardViewAdapter : RecyclerView.Adapter<CardViewAdapter.ViewHolder>() {
         holder.apply {
             val color = getDarkRandomColor()
             textTitle.text = cardList[position].text
-            textTitle.setTextColor(color)
             val type =
                 Typeface.createFromAsset(textTitle.context.assets, "fonts/roboto_regular.ttf")
             textTitle.typeface = type
 
             val trackPosition = "${position + 1}/${cardList.size}"
             textId.text = trackPosition
+            when (position % 4) {
+                0 -> constraintCard.setBackgroundResource(R.drawable.card_view_gradient)
+                1 -> constraintCard.setBackgroundResource(R.drawable.card_view_gradient_1)
+                2 -> constraintCard.setBackgroundResource(R.drawable.card_view_gradient_3)
+                3 -> constraintCard.setBackgroundResource(R.drawable.card_view_gradient_2)
+            }
+
         }
 
     }
@@ -52,6 +58,7 @@ class CardViewAdapter : RecyclerView.Adapter<CardViewAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textTitle = view.textTitle
         val textId = view.textId
+        val constraintCard = view.constraintCard
 
     }
 
