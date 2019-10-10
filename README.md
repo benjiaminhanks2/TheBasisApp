@@ -20,7 +20,7 @@
   
      View Model
      
-     1. FlightViewModel- Business logic for getting data from api, sending it to activity which in turns sends it to adpater by binding it with CardViewModel
+     1. CardListViewModel- Business logic for getting data from api, sending it to activity which in turns sends it to adpater by binding it with CardListViewModel
     
      
 #### Steps to Install app
