@@ -14,11 +14,10 @@
      
      1. DataProviderClass- This provides the data to viewModel 
    
-    View           
+     View           
      
      1. MainActivity- Launcher activity
   
-     
      View Model
      
      1. FlightViewModel- Business logic for getting data from api, sending it to activity which in turns sends it to adpater by binding it with CardViewModel
