@@ -3,16 +3,12 @@ package com.example.thebasiscardapplication.dataModel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.Gson
-import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 object DataProvider {
-
-
     /*
     * Method for getting the data from server and set to the live data
     * */
@@ -53,4 +49,3 @@ object DataProvider {
         })
     }
 }
-

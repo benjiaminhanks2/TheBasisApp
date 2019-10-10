@@ -9,11 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.thebasiscardapplication.dataModel.CardDataList
 import kotlinx.android.synthetic.main.card_view_item.view.*
 import java.util.*
+import android.graphics.drawable.GradientDrawable
 
+
+/*
+* Card view adapter
+* */
 class CardViewAdapter : RecyclerView.Adapter<CardViewAdapter.ViewHolder>() {
 
     var cardList = emptyList<CardDataList>()
-
 
     fun setCardDataList(cardList: List<CardDataList>) {
         this.cardList = cardList
@@ -26,15 +30,16 @@ class CardViewAdapter : RecyclerView.Adapter<CardViewAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         holder.apply {
-            val rnd = Random()
-            val color = Color.argb(255, rnd.nextInt(100), rnd.nextInt(100), rnd.nextInt(100))
+            val color = getDarkRandomColor()
             textTitle.text = cardList[position].text
             textTitle.setTextColor(color)
             val type =
                 Typeface.createFromAsset(textTitle.context.assets, "fonts/roboto_regular.ttf")
             textTitle.typeface = type
+
+            val trackPosition = "${position + 1}/${cardList.size}"
+            textId.text = trackPosition
         }
 
     }
@@ -43,18 +48,19 @@ class CardViewAdapter : RecyclerView.Adapter<CardViewAdapter.ViewHolder>() {
         return cardList.size
     }
 
-    fun setStrings(cardList: List<CardDataList>) {
-        this.cardList = cardList
-    }
-
-    fun getStrings(): List<CardDataList> {
-        return cardList
-    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val textTitle = view.textTitle
+        val textId = view.textId
 
+    }
+
+    /*
+    * Get Random Light color
+    * */
+    fun getDarkRandomColor(): Int {
+        val rnd = Random()
+        return Color.argb(255, rnd.nextInt(150), rnd.nextInt(100), rnd.nextInt(100))
     }
 
 }

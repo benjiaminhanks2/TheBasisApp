@@ -1,18 +1,18 @@
 package com.example.thebasiscardapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DiffUtil
 import com.example.thebasiscardapplication.dataModel.CardDataList
 import com.example.thebasiscardapplication.dataModel.CardDataModel
 import com.yuyakaido.android.cardstackview.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_activity.*
 
 class MainActivity : AppCompatActivity(), CardStackListener {
 
@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity(), CardStackListener {
     lateinit var cardStackLayoutManager: CardStackLayoutManager
     var cardViewAdapter = CardViewAdapter()
     var cardList = ArrayList<CardDataList>()
-    var cardPosition = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +30,9 @@ class MainActivity : AppCompatActivity(), CardStackListener {
         callApi()
     }
 
+    /*
+    * Set up card view
+    * */
     fun setUpCardViews() {
         cardStackLayoutManager = CardStackLayoutManager(this, this)
         cardStackLayoutManager.setStackFrom(StackFrom.None)
@@ -53,16 +55,22 @@ class MainActivity : AppCompatActivity(), CardStackListener {
         }
     }
 
+    /*
+    * Call api from viewModel
+    * */
     private fun callApi() {
+        showProgressBar()
         cardListViewModel.setDataToCard()
     }
 
-
+    /*
+    * View Model Initialize
+    * */
     fun initViewModels() {
         cardListViewModel = ViewModelProviders.of(this).get(CardListViewModel::class.java)
         cardListViewModel.getDataFromObserver().observe(this,
             Observer<CardDataModel> { t ->
-                Log.e("data", "$t")
+                hideProgressBar()
                 if (t != null) {
                     responseSuccess(t)
                 } else {
@@ -71,58 +79,62 @@ class MainActivity : AppCompatActivity(), CardStackListener {
             })
     }
 
+    /*
+    * Api Response Failed
+    * */
     private fun responseFailed() {
-
+        Toast.makeText(this, "Response Failed", Toast.LENGTH_SHORT).show()
     }
 
-
+    /*
+    * Api response success method
+    * */
     fun responseSuccess(cardDataModel: CardDataModel) {
         if (cardDataModel.dataList.isNotEmpty()) {
             cardList.clear()
             cardList.addAll(cardDataModel.dataList)
-            cardViewAdapter.setCardDataList(cardDataModel.dataList)
-            setCardTrack(cardPosition)
+            setCardViewAdapter()
         }
     }
 
-
-    private fun paginate() {
-        val old = cardViewAdapter.getStrings()
-        val new = old.plus(cardList)
-        val callback = StringDiffCallback(old, new)
-        val result = DiffUtil.calculateDiff(callback)
-        cardViewAdapter.setStrings(new)
-        result.dispatchUpdatesTo(cardViewAdapter)
+    /*
+    * Set Card Adapter
+    * */
+    fun setCardViewAdapter() {
+        cardViewAdapter.setCardDataList(cardList)
     }
 
-    fun setCardTrack(cardPos: Int) {
-        textId.text = "$cardPos"
+    /*
+    * Show progress bar
+    * */
+    fun showProgressBar() {
+        circleProgressBar.visibility = View.VISIBLE
     }
 
-
-    override fun onCardDisappeared(view: View?, position: Int) {
-
+    /*
+    * hide progress bar
+    * */
+    fun hideProgressBar() {
+        circleProgressBar.visibility = View.GONE
     }
 
-    override fun onCardDragging(direction: Direction?, ratio: Float) {
-    }
+    /*
+    * Card Stack listener overridden methods
+    * */
+    override fun onCardDisappeared(view: View?, position: Int) {}
+
+    override fun onCardDragging(direction: Direction?, ratio: Float) {}
 
     override fun onCardSwiped(direction: Direction?) {
-        cardPosition = cardStackLayoutManager.topPosition + 1
         if (cardStackLayoutManager.topPosition == cardViewAdapter.itemCount) {
-            paginate()
-            cardPosition = 1
+            setCardViewAdapter()
         }
-        setCardTrack(cardPosition)
     }
 
-    override fun onCardCanceled() {
-    }
+    override fun onCardCanceled() {}
 
-    override fun onCardAppeared(view: View?, position: Int) {
-    }
+    override fun onCardAppeared(view: View?, position: Int) {}
 
-    override fun onCardRewound() {
-    }
+    override fun onCardRewound() {}
 
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,11 +11,22 @@
     android:layout_marginStart="25dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp"
-    app:contentPadding="10dp">
+    android:background="@drawable/card_view_gradient">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@drawable/card_view_gradient"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1/10"
+            android:padding="10dp"
+            android:textColor="@color/grey"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/textTitle"
@@ -26,7 +38,7 @@
             android:textAlignment="center"
             android:textStyle="bold"
             android:letterSpacing="0.1"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textId"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />

@@ -8,4 +8,11 @@
     <color name="white">#ffffff</color>
     <color name="grey">#788794</color>
 
+    <color name="yellow">#F9E892</color>
+    <color name="green_light">#A4EC87</color>
+    <color name="green">#FF4ABF1B</color>
+
+    <color name="orange">#FFA500</color>z
+    <color name="light">#FD9393</color>
+    <color name="black">#000000</color>
 </resources>
